@@ -21,6 +21,7 @@ public partial class Course
 
     public int? Top_Id { get; set; }
 
+
     [InverseProperty("Crs")]
     public virtual ICollection<Ins_Course> Ins_Courses { get; set; } = new List<Ins_Course>();
 

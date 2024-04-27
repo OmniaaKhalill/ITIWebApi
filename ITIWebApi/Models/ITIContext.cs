@@ -96,7 +96,7 @@ public partial class ITIContext : DbContext
                     tb.HasTrigger("stdUpdate_tr");
                 });
 
-            entity.Property(e => e.St_Id).ValueGeneratedNever();
+            entity.Property(e => e.St_Id).ValueGeneratedOnAdd();
             entity.Property(e => e.St_Lname).IsFixedLength();
 
             entity.HasOne(d => d.Dept).WithMany(p => p.Students).HasConstraintName("FK_Student_Department");

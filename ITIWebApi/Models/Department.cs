@@ -27,9 +27,12 @@ public partial class Department
 
     public DateOnly? Manager_hiredate { get; set; }
 
+
     [ForeignKey("Dept_Manager")]
+
     [InverseProperty("Departments")]
-    public virtual Instructor Dept_ManagerNavigation { get; set; }
+
+    public virtual Instructor? Dept_ManagerNavigation { get; set; }
 
     [InverseProperty("Dept")]
     public virtual ICollection<Instructor> Instructors { get; set; } = new List<Instructor>();

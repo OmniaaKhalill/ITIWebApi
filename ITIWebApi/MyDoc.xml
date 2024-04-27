@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ITIWebApi</name>
+    </assembly>
+    <members>
+        <member name="M:ITIWebApi.Controllers.StudentsController.GetAll">
+            <summary>
+              get  all student  
+            </summary>
+            <param>  </param>
+            <returns>  students data </returns>
+            <remarks>
+            request example: api/students
+            </remarks>
+            
+        </member>
+        <member name="M:ITIWebApi.Controllers.StudentsController.GetById(System.Int32)">
+            <summary>
+              get student by id 
+            </summary>
+            <param name="id"> student id </param>
+            <returns>  student data </returns>
+            <remarks>
+            request example: api/student/3
+            </remarks>
+            
+        </member>
+    </members>
+</doc>

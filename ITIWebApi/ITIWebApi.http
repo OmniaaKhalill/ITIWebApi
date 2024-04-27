@@ -1,6 +1,22 @@
-@ITIWebApi_HostAddress = http://localhost:5043
-
-GET {{ITIWebApi_HostAddress}}/weatherforecast/
-Accept: application/json
+  
+@ITIWebApi_HostAddress=https://localhost:7003/api
+  
 
 ###
+GET {{ITIWebApi_HostAddress}}/students
+
+
+###
+
+GET {{ITIWebApi_HostAddress}}/students/0
+
+###
+
+DELETE {{ITIWebApi_HostAddress}}/students/1
+##
+
+GET {{ITIWebApi_HostAddress}}/Departments/20
+##
+
+
+

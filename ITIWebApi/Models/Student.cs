@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ITIWebApi.Models;
@@ -11,14 +12,14 @@ namespace ITIWebApi.Models;
 [Table("Student")]
 public partial class Student
 {
-    [Key]
+    [Key] 
     public int St_Id { get; set; }
 
     [StringLength(50)]
     public string St_Fname { get; set; }
 
     [StringLength(10)]
-    public string St_Lname { get; set; }
+    public string? St_Lname { get; set; }
 
     [StringLength(100)]
     public string St_Address { get; set; }
@@ -30,6 +31,7 @@ public partial class Student
     public int? St_super { get; set; }
 
     [ForeignKey("Dept_Id")]
+    
     [InverseProperty("Students")]
     public virtual Department Dept { get; set; }
 
