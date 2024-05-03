@@ -12,6 +12,8 @@ namespace ITIWebApi.Models;
 public partial class Department
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
     public int Dept_Id { get; set; }
 
     [StringLength(50)]
@@ -30,13 +32,12 @@ public partial class Department
 
     [ForeignKey("Dept_Manager")]
 
-    [InverseProperty("Departments")]
 
     public virtual Instructor? Dept_ManagerNavigation { get; set; }
 
-    [InverseProperty("Dept")]
+
     public virtual ICollection<Instructor> Instructors { get; set; } = new List<Instructor>();
 
-    [InverseProperty("Dept")]
+  
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 }

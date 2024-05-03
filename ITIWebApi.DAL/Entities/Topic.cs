@@ -12,6 +12,8 @@ namespace ITIWebApi.Models;
 public partial class Topic
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
     public int Top_Id { get; set; }
 
     [StringLength(50)]

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITIWebApi", "ITIWebApi\ITIWebApi.csproj", "{44462FFF-6247-4655-BC39-E8A7A9B97790}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITIWebApi.PL", "ITIWebApi\ITIWebApi.PL.csproj", "{44462FFF-6247-4655-BC39-E8A7A9B97790}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITIWebApi.BLL", "ITIWebApi.BLL\ITIWebApi.BLL.csproj", "{E6FEAE73-2F66-4C63-B64B-98957B4B8450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITIWebApi.DAL", "ITIWebApi.DAL\ITIWebApi.DAL.csproj", "{C604BFCB-D1C4-4685-864E-DD72EAFBCFDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{44462FFF-6247-4655-BC39-E8A7A9B97790}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44462FFF-6247-4655-BC39-E8A7A9B97790}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44462FFF-6247-4655-BC39-E8A7A9B97790}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6FEAE73-2F66-4C63-B64B-98957B4B8450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6FEAE73-2F66-4C63-B64B-98957B4B8450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6FEAE73-2F66-4C63-B64B-98957B4B8450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6FEAE73-2F66-4C63-B64B-98957B4B8450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C604BFCB-D1C4-4685-864E-DD72EAFBCFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C604BFCB-D1C4-4685-864E-DD72EAFBCFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C604BFCB-D1C4-4685-864E-DD72EAFBCFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C604BFCB-D1C4-4685-864E-DD72EAFBCFDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

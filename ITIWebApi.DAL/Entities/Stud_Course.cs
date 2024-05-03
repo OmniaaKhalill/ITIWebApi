@@ -13,6 +13,7 @@ namespace ITIWebApi.Models;
 public partial class Stud_Course
 {
     [Key]
+
     public int Crs_Id { get; set; }
 
     [Key]

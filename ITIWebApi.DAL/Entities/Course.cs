@@ -12,6 +12,8 @@ namespace ITIWebApi.Models;
 public partial class Course
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
     public int Crs_Id { get; set; }
 
     [StringLength(50)]

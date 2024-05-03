@@ -13,6 +13,8 @@ namespace ITIWebApi.Models;
 public partial class Ins_Course
 {
     [Key]
+  
+
     public int Ins_Id { get; set; }
 
     [Key]
@@ -22,10 +24,8 @@ public partial class Ins_Course
     public string Evaluation { get; set; }
 
     [ForeignKey("Crs_Id")]
-    [InverseProperty("Ins_Courses")]
     public virtual Course Crs { get; set; }
 
     [ForeignKey("Ins_Id")]
-    [InverseProperty("Ins_Courses")]
     public virtual Instructor Ins { get; set; }
 }

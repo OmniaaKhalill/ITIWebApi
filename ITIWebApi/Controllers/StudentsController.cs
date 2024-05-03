@@ -1,8 +1,11 @@
-﻿using ITIWebApi.DTO;
+﻿using ITIWebApi.BLL.Interfaces;
+using ITIWebApi.DTO;
 using ITIWebApi.Models;
+using ITIWebApi.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ITIWebApi.Controllers
 {
@@ -10,11 +13,12 @@ namespace ITIWebApi.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        ITIContext _db;
-        public StudentsController(ITIContext db)
+        private readonly IUnitOfWork _unit;
+       
+        public StudentsController(IUnitOfWork unit)
         {
-            _db = db;
-
+           _unit= unit;
+           
         }
 
 
@@ -30,7 +34,7 @@ namespace ITIWebApi.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var students = _db.Students.ToList();
+            var students = _unit.StudentRepo.GetAll();
             if (students == null)
             {
                 return NotFound();
@@ -63,7 +67,7 @@ namespace ITIWebApi.Controllers
         [HttpGet("byPage")]
         public IActionResult GetByPage([FromQuery] int pageNum , [FromQuery] int pageSize )
         {
-            var students = _db.Students.ToList();
+            var students = _unit.StudentRepo.GetAll();
            
 
             if (students == null)
@@ -73,7 +77,7 @@ namespace ITIWebApi.Controllers
 
             else
             {
-                int studentsCount = students.Count;
+                int studentsCount = students.Count();
                 var totalPages= (int)Math.Ceiling((double)studentsCount/pageSize);
 
                 var studentsPerPage = students.Skip((pageNum-1)*pageSize).Take(pageSize);
@@ -101,8 +105,6 @@ namespace ITIWebApi.Controllers
         }
 
 
-
-
         /// <summary>
         ///   get student by id 
         /// </summary>
@@ -112,12 +114,13 @@ namespace ITIWebApi.Controllers
         /// request example: api/student/3
         /// </remarks>
         /// 
+
         [HttpGet("{id:int}")]
         [Produces("application/json")]
         public IActionResult GetById(int id)
         {
-          
-            var std = _db.Students.Find(id);
+
+            var std = _unit.StudentRepo.GetById(id);
             if (std == null)
             {
                 return NotFound();
@@ -139,13 +142,13 @@ namespace ITIWebApi.Controllers
             }
         }
 
-        // change route ==> "/api/crs/name"
+ 
       
         [HttpGet("{name:alpha}")]
         [Produces("application/json")]
         public IActionResult GetByName(string name)
         {
-            var std = _db.Students.FirstOrDefault(s => s.St_Fname == name);
+            var std = _unit.StudentRepo.GetByName(name);
             if (std == null)
             {
                 return NotFound();
@@ -159,7 +162,7 @@ namespace ITIWebApi.Controllers
                     Address = std.St_Address != null ? std.St_Address : "no address",
                     DepartmentName = std.Dept != null ? std.Dept.Dept_Name : "no department",
                     SupervisorName = std.St_superNavigation == null ? "no  supervisor" :
-                       std.St_superNavigation.St_Fname + " " + std.St_superNavigation.St_Lname
+                    std.St_superNavigation.St_Fname + " " + std.St_superNavigation.St_Lname
 
                 };
 
@@ -171,9 +174,7 @@ namespace ITIWebApi.Controllers
 
 
         [HttpPost]
-
         [Consumes("application/json")]
-      
         public IActionResult AddStudent(Student std)
         {
             if (std == null)
@@ -185,15 +186,15 @@ namespace ITIWebApi.Controllers
                 return BadRequest();
             }
 
-         
-
-           // _db.Entry(std).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-            _db.Students.Add(std);
-
-            _db.SaveChanges();
+             _unit.StudentRepo.Add(std);
+            _unit.StudentRepo.Save();
             return CreatedAtAction("GetById", new { id = std.St_Id }, std);
 
         }
+
+
+
+
 
         [HttpPut("{id:int}")]
         public IActionResult EditCourse(Student std, int id)
@@ -207,9 +208,10 @@ namespace ITIWebApi.Controllers
                 return BadRequest();
             }
 
-            _db.Entry(std).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            //_db.Courses.Update(crs);
-            _db.SaveChanges();
+            _unit.StudentRepo.Update(std);
+        
+            _unit.StudentRepo.Save();
+
             return NoContent();
         }
 
@@ -217,27 +219,35 @@ namespace ITIWebApi.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult DeleteStudent(int id)
         {
-            var std = _db.Students.Find(id);
+            var studentToDelete = _unit.StudentRepo.GetById(id);
 
-            if (std == null)
+            if (studentToDelete == null)
             {
                 return NotFound();
             }
 
-            _db.Entry(std).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-          
-            _db.SaveChanges();
+            try
+            {
+                _unit.StudentRepo.Delete(id);
+                _unit.StudentRepo.Save();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while deleting the student: {ex.Message}");
+            }
 
-            var std1 = _db.Students.Find(id);
+            var studentAfterDeletion = _unit.StudentRepo.GetById(id);
 
-            if (std1 == null)
+            if (studentAfterDeletion == null)
             {
                 return Ok();
             }
-            else return BadRequest();
-           
-
+            else
+            {
+                return StatusCode(500, "The student was not deleted successfully.");
+            }
         }
+
 
     }
 }

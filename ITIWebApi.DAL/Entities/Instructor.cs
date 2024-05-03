@@ -12,6 +12,8 @@ namespace ITIWebApi.Models;
 public partial class Instructor
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
     public int Ins_Id { get; set; }
 
     [StringLength(50)]

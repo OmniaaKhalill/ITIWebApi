@@ -12,7 +12,9 @@ namespace ITIWebApi.Models;
 [Table("Student")]
 public partial class Student
 {
-    [Key] 
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
     public int St_Id { get; set; }
 
     [StringLength(50)]

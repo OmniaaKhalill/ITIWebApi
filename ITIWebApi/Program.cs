@@ -1,8 +1,10 @@
 
+using ITIWebApi.BLL.Interfaces;
+using ITIWebApi.BLL.Repositories;
 using ITIWebApi.Models;
+using ITIWebApi.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic;
+
 
 namespace ITIWebApi
 {
@@ -14,12 +16,24 @@ namespace ITIWebApi
 
             // Add services to the container.
             string txt = "";
-             builder.Services.AddControllers();
+            builder.Services.AddControllers();
 
-          //  builder.Services.AddControllers().AddNewtonsoftJson(op=>op.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            builder.Services.AddScoped<ICourseRepo,CourseRepo>();
+            builder.Services.AddScoped< IDepartmentRepo,DepartmentRepo> ();
+            builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 
+
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+            //builder.Services.AddControllers().AddNewtonsoftJson(op=>op.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
             builder.Services.AddEndpointsApiExplorer();
+
+
             builder.Services.AddSwaggerGen(
                 options =>{
                     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -55,6 +69,8 @@ namespace ITIWebApi
                 });
 
             });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
