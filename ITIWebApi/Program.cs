@@ -4,6 +4,8 @@ using ITIWebApi.BLL.Repositories;
 using ITIWebApi.Models;
 using ITIWebApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 namespace ITIWebApi
@@ -25,6 +27,19 @@ namespace ITIWebApi
 
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddAuthentication(op => op.DefaultAuthenticateScheme = "my schema").AddJwtBearer("my schema", op =>
+            {
+                string secretKey = "omniawishy_omniawishy_omniawishy";
+                var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+                op.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = key,
+                    ValidateIssuer=false,
+                    ValidateAudience=false
+                };
+
+            });
 
 
             //builder.Services.AddControllers().AddNewtonsoftJson(op=>op.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
